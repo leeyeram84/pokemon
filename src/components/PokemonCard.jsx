@@ -1,16 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import MOCK_DATA from "../mock";
-import Type from "../Type";
 
 const PokemonCard = ({ pokemon, isSelected, addPokemon, removePokemon }) => {
     const navigate = useNavigate();
-
-    // 포켓몬 id값을 받아와 해당 id값을 가진 포켓몬 데이터 가져오기
-    const params = useParams(); // params 로 url id 가져오기
-    const pokemonId = Number(params.id); // 가져운 url id 정수타입으로 변환
-    const targetPokemon = MOCK_DATA.find((pokemon) => pokemon.id === pokemonId); // 가져온 url id와 MOCK_DATA id를 비교
 
     // 동행 포켓몬 추가
     const onAddPokemon = () => {
@@ -41,7 +34,7 @@ const PokemonCard = ({ pokemon, isSelected, addPokemon, removePokemon }) => {
                             onRemovePokemon();
                         }}
                     >
-                        삭제
+                        몬스터볼에 넣기
                     </Button>
                 ) : (
                     <Button
