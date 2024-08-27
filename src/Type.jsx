@@ -1,4 +1,4 @@
-export const pokemonType = (type) => {
+const pokemonType = (type) => {
     switch (type) {
         case "불꽃":
             return "#EF7374";
@@ -27,10 +27,12 @@ export const pokemonType = (type) => {
         case "얼음":
             return "#81DFF7";
         case "드래곤":
-            return "#58D98EC35CA8";
+            return "#8D98EC";
         case "페어리":
             return "#F5A2F5";
         default:
             return "#9DC1B7";
     }
 };
+
+export default pokemonType;

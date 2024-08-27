@@ -14,7 +14,7 @@ const Dex = () => {
 
         //유효성 검사
         if (findPokemon) {
-            alert("이미 등록된 포켓몬이야!");
+            alert("이미 동행중인 포켓몬이야!");
             return;
         }
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MOCK_DATA from "../mock";
 import styled, { keyframes } from "styled-components";
@@ -7,21 +7,25 @@ import Type from "../Type";
 const PokemonDetail = () => {
     const navigate = useNavigate();
 
-    const typeColor = useContext();
-
     // 포켓몬 id값을 받아와 해당 id값을 가진 포켓몬 데이터 가져오기
-    const params = useParams();
-    const pokemonId = Number(params.id);
-    const targetPokemon = MOCK_DATA.find((pokemon) => pokemon.id === pokemonId);
+    const params = useParams(); // params 로 url id 가져오기
+    const pokemonId = Number(params.id); // 가져운 url id 정수타입으로 변환
+    const targetPokemon = MOCK_DATA.find((pokemon) => pokemon.id === pokemonId); // 가져온 url id와 MOCK_DATA id를 비교
+
+    // const typeColor = [Type(targetPokemon.types[0])];
 
     return (
-        <DetailContainer color={Type(targetPokemon.types[0])}>
-            <Img src={targetPokemon.img_url}></Img>
-            <h1 style={{ fontSize: "50px" }}>{targetPokemon.korean_name}</h1>
-            <p style={{ fontSize: "25px" }}>
-                타입: {targetPokemon.types.join(", ")}
-            </p>
-            <p style={{ fontSize: "25px" }}>{targetPokemon.description}</p>
+        <Box>
+            <DetailContainer color={targetPokemon.types}>
+                <Img src={targetPokemon.img_url}></Img>
+                <h1 style={{ fontSize: "50px" }}>
+                    {targetPokemon.korean_name}
+                </h1>
+                <p style={{ fontSize: "25px" }}>
+                    타입: {targetPokemon.types.join(", ")}
+                </p>
+                <p style={{ fontSize: "25px" }}>{targetPokemon.description}</p>
+            </DetailContainer>
             <BackButton
                 onClick={() => {
                     navigate("/dex");
@@ -29,25 +33,36 @@ const PokemonDetail = () => {
             >
                 뒤로가기
             </BackButton>
-        </DetailContainer>
+        </Box>
     );
 };
 
 export default PokemonDetail;
+
+const Box = styled.div`
+    position: absolute;
+
+    width: 700px;
+    min-height: 700px;
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+`;
 
 const DetailContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: relative;
 
-    width: 700px;
-    height: 700px;
-    left: 50%;
-    top: 50%;
+    width: 100%;
+    height: 100%;
 
-    transform: translate(-50%, -50%);
+    overflow: hidden;
+
+    padding-bottom: 50px;
 
     border-radius: 10px;
     background-color: #f8f9fa;
@@ -71,7 +86,16 @@ const DetailContainer = styled.div`
 
     // 디테일 카드 호버 시 스타일 변경
     &:hover {
-        background-color: ${(props) => props.color};
+        background: ${(props) => {
+            if (props.color.length > 1) {
+                return `linear-gradient(45deg, ${Type(props.color[0])},${Type(
+                    props.color[1]
+                )} )`;
+            } else {
+                return Type(props.color[0]);
+            }
+        }};
+
         color: #fff;
 
         // 호버 시 반사광 이동
@@ -91,9 +115,9 @@ const BackButton = styled.button`
     width: 200px;
 
     position: absolute;
-    top: 650px;
+    bottom: 0px;
+    left: 50%;
 
-    margin-top: 20px;
     transition: 300ms ease-in-out;
     padding: 20px;
 
@@ -106,6 +130,8 @@ const BackButton = styled.button`
 
     box-shadow: 3px 8px 0px 0px #893a48;
 
+    transform: translateX(-50%);
+
     &:hover {
         border: 2px solid #4c245a;
         background-color: blueviolet;
@@ -113,8 +139,7 @@ const BackButton = styled.button`
     }
 
     &:active {
-        position: absolute;
-        top: 652px;
+        bottom: -10px;
         box-shadow: 0px 0px 0px 0px #51255e;
     }
 `;
