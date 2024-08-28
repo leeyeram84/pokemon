@@ -65,35 +65,39 @@
 > > <p>Type.jsx파일을 별개로 만들어 각 타입에 해당하는 컬러의 hex코드를 swich문으로 만들고, 디테일 페이지에서 props를 통해 각 포켓몬별 타입을 넘겨준다. 그 후 타입의 갯수에 따라 출력되는 컬러값이 다르기때문에 삼항 연상자를 통해 이를 구분해주어 컬러값을 반환해 출력한다.
 > > <p> 이 과정에서 컬러값이 2개 이상 일 경우 배경색을 그라데이션으로 출력해야하는데, 타입값을 제대로 받아오지 못하거나, 2개 중 1개(첫번째 값)만을 반환하여 코드가 의도대로 작동하지 않았다.
 > > <p>해당 부분의 코드이다
-> > ```
-> > <DetailContainer color={targetPokemon.types}>
-> > const DetailContainer = styled.div`
-> > // 디테일 카드 호버 시 스타일 변경
-> >    &:hover {
-> >     background: ${(props) => {
-> >      if (props.color.length > 1) {
-> >       return `linear-gradient(45deg, ${Type(props.color[0]> >)},${Type(
-> >     props.color[1]
-> >                )} )`;
-> >         } else {
-> >          return Type(props.color[0]);
-> >   }}}};`
+>
+> ```
+>  <DetailContainer color={targetPokemon.types}>
+>  const DetailContainer = styled.div`
+>  // 디테일 카드 호버 시 스타일 변경
+>     &:hover {
+>      background: ${(props) => {
+>       if (props.color.length > 1) {
+>        return `linear-gradient(45deg, ${Type(props.color[0]> )},${Type(
+>      props.color[1]
+>                 )} )`;
+>          } else {
+>           return Type(props.color[0]);
+>    }}}};`
+> ```
+>
+> > 처음엔 Type(targetPokemon.types)로 타입을 받아왔는데 이를 props로 넘겼을 때 값을 제대로 읽지 못하거나, 첫번째 값만을 읽어왔었다.
+> > 그래서 targetPokemon.types 값 전체를 넘겨주고 아래 css 부분에서 Type으로 감싸 hex코드값을 가져왔다!
+> > 외에도 사소한 오타나 괄호, `등의 위치가 잘못되어 사소한 오류들이 많았었다.
+> > 코드가 길어지면 길어질수록 사소하고 자잘한 오류들이 많이 생기게 되는것같다.
 
-> > love my team
-> > 이창현 님
-> > 장종호 님
-> > 류지원 님
-> > 김태흔 님
+> love my team
+> 이창현 님
+> 장종호 님
+> 류지원 님
+> 김태흔 님
 
-도움을 주신 분들
-정수희 님
-노용철 님
-권다정 님
-박준호 님
-신희범 님
-외 다수
-감사합니다
-
-```
-
-```
+> 도움을 주신 분들
+> 정수희 님
+> 노용철 님
+> 권다정 님
+> 박준호 님
+> 신희범 님
+> 외 다수
+>
+>  <p> 모두들 감사합니다
